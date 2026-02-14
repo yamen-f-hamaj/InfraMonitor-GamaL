@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Test - MetricsHub</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .status.disconnected {
+            background: #fee;
+            color: #c00;
+            border: 1px solid #fcc;
+        }
+        .status.connected {
+            background: #efe;
+            color: #0a0;
+            border: 1px solid #cfc;
+        }
+        .status.connecting {
+            background: #ffc;
+            color: #aa0;
+            border: 1px solid #ffa;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        button.primary {
+            background: #3498db;
+            color: white;
+        }
+        button.success {
+            background: #27ae60;
+            color: white;
+        }
+        button.danger {
+            background: #e74c3c;
+            color: white;
+        }
+        button.warning {
+            background: #f39c12;
+            color: white;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .input-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 200px;
+        }
+        .logs {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid transparent;
+        }
+        .log-entry.info {
+            border-color: #3498db;
+            color: #61dafb;
+        }
+        .log-entry.success {
+            border-color: #27ae60;
+            color: #98fb98;
+        }
+        .log-entry.error {
+            border-color: #e74c3c;
+            color: #ff6b6b;
+        }
+        .log-entry.warning {
+            border-color: #f39c12;
+            color: #ffd700;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 11px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .section h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 SignalR Hub Test - MetricsHub</h1>
+        <p>Test your SignalR connection and hub methods</p>
+
+        <div id="status" class="status disconnected">
+            ⭕ Status: Disconnected
+        </div>
+
+        <div class="section">
+            <h3>Connection Controls</h3>
+            <div class="controls">
+                <button id="connectBtn" class="primary">Connect to Hub</button>
+                <button id="disconnectBtn" class="danger" disabled>Disconnect</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Group Management</h3>
+            <div class="input-group">
+                <label for="serverIdInput">Server ID:</label>
+                <input type="text" id="serverIdInput" placeholder="Enter server ID (e.g., 1)" value="1">
+            </div>
+            <div class="controls">
+                <button id="joinGroupBtn" class="success" disabled>Join Server Group</button>
+                <button id="leaveGroupBtn" class="warning" disabled>Leave Server Group</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📊 Test Broadcast (Simulate Backend)</h3>
+            <p style="color: #666; font-size: 14px;">
+                These buttons simulate what your backend would send. In production, 
+                your backend services will trigger these events.
+            </p>
+            <div class="controls">
+                <button id="simulateMetricBtn" class="primary" disabled>Simulate Metric Received</button>
+                <button id="simulateAlertBtn" class="warning" disabled>Simulate Alert Received</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📜 Event Log</h3>
+            <button onclick="clearLogs()" style="margin-bottom: 10px;">Clear Logs</button>
+            <div id="logs" class="logs">
+                <div class="log-entry info">🚀 SignalR Test Page Ready - Click "Connect to Hub" to start</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        let connection = null;
+        const hubUrl = 'https://localhost:63943/metricsHub';
+
+        const statusDiv = document.getElementById('status');
+        const logsDiv = document.getElementById('logs');
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+        const joinGroupBtn = document.getElementById('joinGroupBtn');
+        const leaveGroupBtn = document.getElementById('leaveGroupBtn');
+        const simulateMetricBtn = document.getElementById('simulateMetricBtn');
+        const simulateAlertBtn = document.getElementById('simulateAlertBtn');
+        const serverIdInput = document.getElementById('serverIdInput');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+            logsDiv.appendChild(entry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        function clearLogs() {
+            logsDiv.innerHTML = '';
+            log('📜 Logs cleared', 'info');
+        }
+
+        function updateStatus(status, message) {
+            statusDiv.className = `status ${status}`;
+            statusDiv.textContent = message;
+        }
+
+        function updateButtons(connected) {
+            connectBtn.disabled = connected;
+            disconnectBtn.disabled = !connected;
+            joinGroupBtn.disabled = !connected;
+            leaveGroupBtn.disabled = !connected;
+            simulateMetricBtn.disabled = !connected;
+            simulateAlertBtn.disabled = !connected;
+        }
+
+        async function connect() {
+            try {
+                updateStatus('connecting', '🔄 Status: Connecting...');
+                log('🔌 Attempting to connect to: ' + hubUrl, 'info');
+
+                connection = new signalR.HubConnectionBuilder()
+                    .withUrl(hubUrl, {
+                        withCredentials: true,
+                        skipNegotiation: false
+                    })
+                    .configureLogging(signalR.LogLevel.Information)
+                    .build();
+
+                // Register event handlers
+                connection.on('ReceiveMetric', (metric) => {
+                    log('📊 METRIC RECEIVED: ' + JSON.stringify(metric, null, 2), 'success');
+                });
+
+                connection.on('ReceiveAlert', (alert) => {
+                    log('🚨 ALERT RECEIVED: ' + JSON.stringify(alert, null, 2), 'warning');
+                });
+
+                connection.onclose((error) => {
+                    updateStatus('disconnected', '⭕ Status: Disconnected');
+                    updateButtons(false);
+                    if (error) {
+                        log('❌ Connection closed with error: ' + error, 'error');
+                    } else {
+                        log('✅ Connection closed gracefully', 'info');
+                    }
+                });
+
+                await connection.start();
+                updateStatus('connected', '✅ Status: Connected');
+                updateButtons(true);
+                log('✅ Successfully connected to MetricsHub!', 'success');
+                log('🆔 Connection ID: ' + connection.connectionId, 'info');
+
+            } catch (err) {
+                updateStatus('disconnected', '❌ Status: Connection Failed');
+                updateButtons(false);
+                log('❌ Connection Error: ' + err.toString(), 'error');
+                console.error('Connection error:', err);
+            }
+        }
+
+        async function disconnect() {
+            if (connection) {
+                try {
+                    await connection.stop();
+                    log('🔌 Disconnected from hub', 'info');
+                } catch (err) {
+                    log('❌ Disconnect error: ' + err.toString(), 'error');
+                }
+            }
+        }
+
+        async function joinGroup() {
+            const serverId = serverIdInput.value;
+            if (!serverId) {
+                log('⚠️ Please enter a server ID', 'warning');
+                return;
+            }
+            try {
+                await connection.invoke('JoinServerGroup', serverId);
+                log(`✅ Joined server group: Server_${serverId}`, 'success');
+            } catch (err) {
+                log('❌ Join group error: ' + err.toString(), 'error');
+            }
+        }
+
+        async function leaveGroup() {
+            const serverId = serverIdInput.value;
+            if (!serverId) {
+                log('⚠️ Please enter a server ID', 'warning');
+                return;
+            }
+            try {
+                await connection.invoke('LeaveServerGroup', serverId);
+                log(`✅ Left server group: Server_${serverId}`, 'success');
+            } catch (err) {
+                log('❌ Leave group error: ' + err.toString(), 'error');
+            }
+        }
+
+        function simulateMetric() {
+            const serverId = serverIdInput.value || '1';
+            const fakeMetric = {
+                metricId: Math.floor(Math.random() * 1000),
+                serverId: parseInt(serverId),
+                cpuUsage: (Math.random() * 100).toFixed(2),
+                memoryUsage: (Math.random() * 100).toFixed(2),
+                diskUsage: (Math.random() * 100).toFixed(2),
+                responseTime: (Math.random() * 500).toFixed(2),
+                status: ['Up', 'Down', 'Maintenance'][Math.floor(Math.random() * 3)],
+                timestamp: new Date().toISOString()
+            };
+            
+            log('📤 Simulated metric (in real app, this comes from your backend):', 'info');
+            log('Note: To trigger ReceiveMetric event, your backend must call hubContext.Clients.Group().SendAsync()', 'warning');
+        }
+
+        function simulateAlert() {
+            log('📤 Simulated alert (in real app, this comes from your backend):', 'info');
+            log('Note: To trigger ReceiveAlert event, your backend must call hubContext.Clients.All.SendAsync()', 'warning');
+        }
+
+        // Event listeners
+        connectBtn.addEventListener('click', connect);
+        disconnectBtn.addEventListener('click', disconnect);
+        joinGroupBtn.addEventListener('click', joinGroup);
+        leaveGroupBtn.addEventListener('click', leaveGroup);
+        simulateMetricBtn.addEventListener('click', simulateMetric);
+        simulateAlertBtn.addEventListener('click', simulateAlert);
+
+        log('💡 Tip: Open browser DevTools (F12) > Network tab to see WebSocket connection', 'info');
+    </script>
+</body>
+</html>

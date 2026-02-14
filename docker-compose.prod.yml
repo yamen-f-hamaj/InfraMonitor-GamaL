@@ -1,0 +1,41 @@
+services:
+  inframonitor.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Connection strings should ideally be managed via Docker Secrets or Environment Variables in CICD
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=InfraMonitor_Prod;User Id=sa;Password=$PROD_SQL_PASSWORD;
+      - ConnectionStrings__LogDatabase=Host=postgres;Port=5432;Database=inframonitor_logs_prod;Username=logs_user;Password=$PROD_LOGS_PASSWORD;
+      - ConnectionStrings__Redis=prod-redis:6379
+    ports:
+      - "80:8080"
+      - "443:8081"
+    restart: unless-stopped
+
+  sqlserver:
+    environment:
+      SA_PASSWORD: "$PROD_SQL_PASSWORD"
+    volumes:
+      - prod_sql_data:/var/opt/mssql
+    restart: unless-stopped
+
+  postgres:
+    environment:
+      POSTGRES_DB: inframonitor_logs_prod
+      POSTGRES_PASSWORD: "$PROD_LOGS_PASSWORD"
+    volumes:
+      - prod_logs_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  prod-redis:
+    image: redis:7-alpine
+    container_name: inframonitor-redis-prod
+    volumes:
+      - prod_redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  prod_sql_data:
+  prod_logs_data:
+  prod_redis_data:
+
+

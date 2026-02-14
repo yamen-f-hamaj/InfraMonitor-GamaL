@@ -1,0 +1,160 @@
+{
+  "ReportId": 12,
+  "ServerId": 1,
+  "GeneratedAt": "2026-02-14T19:26:06.1626957Z",
+  "MetricsCount": 21,
+  "Summary": {
+    "AvgCpu": 56.64619047619048,
+    "AvgMemory": 53.609047619047615,
+    "AvgResponseTime": 280.6666666666667
+  },
+  "Metrics": [
+    {
+      "Timestamp": "2026-02-14T18:46:14.517",
+      "CpuUsage": 59.87,
+      "MemoryUsage": 76.45,
+      "ResponseTime": 221,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:48:14.54",
+      "CpuUsage": 54.62,
+      "MemoryUsage": 14.85,
+      "ResponseTime": 394,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T18:50:14.567",
+      "CpuUsage": 76.75,
+      "MemoryUsage": 78.47,
+      "ResponseTime": 369,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:52:14.597",
+      "CpuUsage": 91.05,
+      "MemoryUsage": 22.56,
+      "ResponseTime": 211,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T18:54:10.73",
+      "CpuUsage": 47.58,
+      "MemoryUsage": 96.65,
+      "ResponseTime": 377,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:56:14.637",
+      "CpuUsage": 57.13,
+      "MemoryUsage": 55.05,
+      "ResponseTime": 378,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:58:14.7",
+      "CpuUsage": 41.49,
+      "MemoryUsage": 8.3,
+      "ResponseTime": 436,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T19:00:14.683",
+      "CpuUsage": 80.89,
+      "MemoryUsage": 95.58,
+      "ResponseTime": 265,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:02:14.713",
+      "CpuUsage": 18.62,
+      "MemoryUsage": 70.7,
+      "ResponseTime": 146,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:04:14.78",
+      "CpuUsage": 92.36,
+      "MemoryUsage": 60.96,
+      "ResponseTime": 230,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:06:14.767",
+      "CpuUsage": 34.26,
+      "MemoryUsage": 17.71,
+      "ResponseTime": 197,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T19:08:14.797",
+      "CpuUsage": 58.08,
+      "MemoryUsage": 49.4,
+      "ResponseTime": 476,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T19:10:14.82",
+      "CpuUsage": 42.86,
+      "MemoryUsage": 67.92,
+      "ResponseTime": 11,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:12:14.85",
+      "CpuUsage": 66.41,
+      "MemoryUsage": 92.03,
+      "ResponseTime": 468,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:14:14.873",
+      "CpuUsage": 44.71,
+      "MemoryUsage": 78.84,
+      "ResponseTime": 358,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:16:14.897",
+      "CpuUsage": 40.63,
+      "MemoryUsage": 61.3,
+      "ResponseTime": 128,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:18:14.923",
+      "CpuUsage": 58.6,
+      "MemoryUsage": 25.93,
+      "ResponseTime": 298,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:20:14.95",
+      "CpuUsage": 44.14,
+      "MemoryUsage": 27.03,
+      "ResponseTime": 134,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:22:14.98",
+      "CpuUsage": 97.56,
+      "MemoryUsage": 15.26,
+      "ResponseTime": 227,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:24:15.05",
+      "CpuUsage": 37.49,
+      "MemoryUsage": 30.85,
+      "ResponseTime": 386,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T19:26:00.043",
+      "CpuUsage": 44.47,
+      "MemoryUsage": 79.95,
+      "ResponseTime": 184,
+      "Status": "Up"
+    }
+  ]
+}

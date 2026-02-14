@@ -1,0 +1,41 @@
+{
+  "ReportId": 2,
+  "ServerId": 1,
+  "GeneratedAt": "2026-02-14T18:53:46.2465124Z",
+  "MetricsCount": 4,
+  "Summary": {
+    "AvgCpu": 70.5725,
+    "AvgMemory": 48.082499999999996,
+    "AvgResponseTime": 298.75
+  },
+  "Metrics": [
+    {
+      "Timestamp": "2026-02-14T18:46:14.517",
+      "CpuUsage": 59.87,
+      "MemoryUsage": 76.45,
+      "ResponseTime": 221,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:48:14.54",
+      "CpuUsage": 54.62,
+      "MemoryUsage": 14.85,
+      "ResponseTime": 394,
+      "Status": "Down"
+    },
+    {
+      "Timestamp": "2026-02-14T18:50:14.567",
+      "CpuUsage": 76.75,
+      "MemoryUsage": 78.47,
+      "ResponseTime": 369,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-14T18:52:14.597",
+      "CpuUsage": 91.05,
+      "MemoryUsage": 22.56,
+      "ResponseTime": 211,
+      "Status": "Down"
+    }
+  ]
+}

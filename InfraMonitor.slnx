@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Database/" />
+  <Folder Name="/Database/init/">
+    <File Path="001_InitialSchema.sql" />
+    <File Path="init.sh" />
+  </Folder>
+  <Folder Name="/Database/Scripts/" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="InfraMonitor.Application/InfraMonitor.Application.csproj" />
+  <Project Path="InfraMonitor.Domain/InfraMonitor.Domain.csproj" />
+  <Project Path="InfraMonitor.Infrastructure/InfraMonitor.Infrastructure.csproj" />
+  <Project Path="InfraMonitor.Tests/InfraMonitor.Tests.csproj" />
+  <Project Path="InfraMonitor.WebAPI/InfraMonitor.WebAPI.csproj" />
+</Solution>

@@ -1,0 +1,71 @@
+services:
+
+  inframonitor.webapi:
+    image: ${DOCKER_REGISTRY-}inframonitorwebapi
+    build:
+      context: .
+      dockerfile: InfraMonitor.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=InfraMonitor;User Id=sa;Password=Yamen@Pass123;TrustServerCertificate=True;
+      - ConnectionStrings__LogDatabase=Host=postgres;Port=5432;Database=inframonitor_logs;Username=logs_user;Password=Logs@Pass123;
+      - ConnectionStrings__Redis=redis:6379
+    ports:
+      - "4434:8081"
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+      - postgres
+    networks:
+      - inframonitor-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: inframonitor-sql
+    environment:
+      SA_PASSWORD: "Yamen@Pass123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./Database/init:/scripts
+    networks:
+      - inframonitor-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: inframonitor-logs-db
+    environment:
+      POSTGRES_USER: logs_user
+      POSTGRES_PASSWORD: "Logs@Pass123"
+      POSTGRES_DB: inframonitor_logs
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./Database/logs-data:/var/lib/postgresql/data
+    networks:
+      - inframonitor-network
+  redis:
+    image: redis:7-alpine
+    container_name: inframonitor-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - inframonitor-network
+
+  frontend:
+    container_name: Gama-frontend
+    build:
+      context: ../../GamaFront-end/InfraMonitor  # <-- Angular folder
+      dockerfile: Dockerfile
+    ports:
+      - "4201:80"
+    networks:
+      - inframonitor-network
+    depends_on:
+      - inframonitor.webapi
+
+networks:
+  inframonitor-network:
+    driver: bridge
+    name: inframonitor-net

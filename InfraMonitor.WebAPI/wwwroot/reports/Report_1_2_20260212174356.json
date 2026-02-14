@@ -1,0 +1,12 @@
+{
+  "ReportId": 2,
+  "ServerId": 1,
+  "GeneratedAt": "2026-02-12T17:43:56.0983285Z",
+  "MetricsCount": 0,
+  "Summary": {
+    "AvgCpu": 0,
+    "AvgMemory": 0,
+    "AvgResponseTime": 0
+  },
+  "Metrics": []
+}

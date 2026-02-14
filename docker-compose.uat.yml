@@ -1,0 +1,30 @@
+services:
+  inframonitor.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=UAT
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=InfraMonitor_UAT;User Id=sa;Password=UAT@Pass123;
+      - ConnectionStrings__LogDatabase=Host=postgres;Port=5432;Database=inframonitor_logs_uat;Username=logs_user;Password=Logs@Pass123;
+      - ConnectionStrings__Redis=uat-redis:6379
+    ports:
+      - "8080:8080"
+    restart: always
+
+  sqlserver:
+    environment:
+      SA_PASSWORD: "UAT@Pass123"
+    ports:
+      - "1433:1433"
+    restart: always
+
+  postgres:
+    environment:
+      POSTGRES_DB: inframonitor_logs_uat
+      POSTGRES_PASSWORD: "Logs@Pass123"
+    ports:
+      - "5432:5432"
+    restart: always
+
+  uat-redis:
+    image: redis:7-alpine
+    container_name: inframonitor-redis-uat
+    restart: always

@@ -1,0 +1,6 @@
+@InfraMonitor.WebAPI_HostAddress = http://localhost:5206
+
+GET {{InfraMonitor.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
