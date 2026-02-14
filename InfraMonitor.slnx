@@ -5,6 +5,7 @@
     <File Path="init.sh" />
   </Folder>
   <Folder Name="/Database/Scripts/" />
+  <Folder Name="/Documentation/" />
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
