@@ -6,6 +6,26 @@
   </Folder>
   <Folder Name="/Database/Scripts/" />
   <Folder Name="/Documentation/" />
+  <Folder Name="/ScreenShots/">
+    <File Path="../../../../Downloads/ScreenShots/2Servers.png" />
+    <File Path="../../../../Downloads/ScreenShots/addNewServer.png" />
+    <File Path="../../../../Downloads/ScreenShots/alreat.png" />
+    <File Path="../../../../Downloads/ScreenShots/datacollectionLive.png" />
+    <File Path="../../../../Downloads/ScreenShots/HanfFire.png" />
+    <File Path="../../../../Downloads/ScreenShots/HangFireDashboard.png" />
+    <File Path="../../../../Downloads/ScreenShots/healthCheckAPI.png" />
+    <File Path="../../../../Downloads/ScreenShots/healthCheckFE.png" />
+    <File Path="../../../../Downloads/ScreenShots/login.png" />
+    <File Path="../../../../Downloads/ScreenShots/MenuData.png" />
+    <File Path="../../../../Downloads/ScreenShots/NewServerCreated.png" />
+    <File Path="../../../../Downloads/ScreenShots/NewUser.png" />
+    <File Path="../../../../Downloads/ScreenShots/ReportDownload.png" />
+    <File Path="../../../../Downloads/ScreenShots/ReportSample.png" />
+    <File Path="../../../../Downloads/ScreenShots/ServerHistory.png" />
+    <File Path="../../../../Downloads/ScreenShots/serverTable.png" />
+    <File Path="../../../../Downloads/ScreenShots/server_Gama monitor server_report.pdf" />
+    <File Path="../../../../Downloads/ScreenShots/Swagger.png" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
