@@ -1,0 +1,27 @@
+{
+  "ReportId": 1,
+  "ServerId": 1,
+  "GeneratedAt": "2026-02-15T18:18:25.0038778Z",
+  "MetricsCount": 2,
+  "Summary": {
+    "AvgCpu": 51.69,
+    "AvgMemory": 67.24000000000001,
+    "AvgResponseTime": 245
+  },
+  "Metrics": [
+    {
+      "Timestamp": "2026-02-15T18:18:03.447",
+      "CpuUsage": 48.97,
+      "MemoryUsage": 57.83,
+      "ResponseTime": 81,
+      "Status": "Up"
+    },
+    {
+      "Timestamp": "2026-02-15T18:18:03.77",
+      "CpuUsage": 54.41,
+      "MemoryUsage": 76.65,
+      "ResponseTime": 409,
+      "Status": "Up"
+    }
+  ]
+}

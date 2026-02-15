@@ -4,6 +4,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       # Connection strings should ideally be managed via Docker Secrets or Environment Variables in CICD
       - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=InfraMonitor_Prod;User Id=sa;Password=$PROD_SQL_PASSWORD;
+      - ConnectionStrings__ReadConnection=Server=sqlserver;Database=InfraMonitor_Prod;User Id=sa;Password=$PROD_SQL_PASSWORD;
       - ConnectionStrings__LogDatabase=Host=postgres;Port=5432;Database=inframonitor_logs_prod;Username=logs_user;Password=$PROD_LOGS_PASSWORD;
       - ConnectionStrings__Redis=prod-redis:6379
     ports:

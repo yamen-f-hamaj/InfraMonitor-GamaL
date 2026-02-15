@@ -24,6 +24,14 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         
+        // Register Read Context
+        var readConnectionString = configuration.GetConnectionString("ReadConnection") ?? connectionString;
+
+        services.AddDbContext<ReadApplicationDbContext>(options =>
+            options.UseSqlServer(readConnectionString));
+
+        services.AddScoped<IReadApplicationDbContext>(provider => provider.GetRequiredService<ReadApplicationDbContext>());
+        
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IThresholdChecker, ThresholdChecker>();
